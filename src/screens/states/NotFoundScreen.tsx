@@ -7,6 +7,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import { useLanguage } from '../../contexts/LanguageContext';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FadeInView from '../../components/FadeInView';
@@ -30,7 +31,6 @@ const NotFoundScreen: React.FC<NotFoundScreenProps> = ({
             alignItems: 'center',
             padding: 20,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         iconContainer: {
             marginBottom: 16,

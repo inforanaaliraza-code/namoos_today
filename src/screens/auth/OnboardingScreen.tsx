@@ -12,6 +12,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '../../hooks/useColors';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FadeInView from '../../components/FadeInView';
 
@@ -28,6 +29,7 @@ interface OnboardingSlide {
 const OnboardingScreen: React.FC = () => {
     const Colors = useColors();
     const navigation = useNavigation();
+    const { getFlexDirection, getTextAlign } = useRTLStyles();
 
 
     const slides: OnboardingSlide[] = [
@@ -94,10 +96,8 @@ const OnboardingScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         header: {
-            flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
             paddingHorizontal: 24,
@@ -115,7 +115,6 @@ const OnboardingScreen: React.FC = () => {
             fontSize: 16,
             color: Colors.primary,
             fontWeight: '600',
-            textAlign: 'left',
         },
         slide: {
             flex: 1,
@@ -263,7 +262,7 @@ const OnboardingScreen: React.FC = () => {
     return (
         <View style={styles.container}>
             {/* Header */}
-            <View style={styles.header}>
+            <View style={[styles.header, { flexDirection: getFlexDirection('row') }]}>
                 <Image
                     source={require('../../assets/logo.png')}
                     style={styles.logo}
@@ -271,7 +270,7 @@ const OnboardingScreen: React.FC = () => {
                 />
                 {currentIndex < slides.length - 1 && (
                     <TouchableOpacity onPress={handleSkip} style={styles.skipButton}>
-                        <Text style={styles.skipText}>Skip</Text>
+                        <Text style={[styles.skipText, { textAlign: getTextAlign('left') }]}>Skip</Text>
                     </TouchableOpacity>
                 )}
             </View>

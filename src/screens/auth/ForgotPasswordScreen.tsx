@@ -17,6 +17,7 @@ import { forgotPassword } from '../../store/slices/authSlice';
 import LanguageSelector from '../../components/LanguageSelector';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useColors } from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import { useTranslation } from 'react-i18next';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import FadeInView from '../../components/FadeInView';
@@ -26,6 +27,7 @@ const ForgotPasswordScreen: React.FC = () => {
     const navigation = useNavigation();
     const dispatch = useAppDispatch();
     const { isLoading, error } = useAppSelector((state) => state.auth);
+    const { getTextAlign } = useRTLStyles();
 
     const { t } = useTranslation();
 
@@ -100,7 +102,6 @@ const ForgotPasswordScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         scrollContent: {
             flexGrow: 1,
@@ -157,7 +158,6 @@ const ForgotPasswordScreen: React.FC = () => {
             fontSize: 16,
             color: Colors.foreground,
             backgroundColor: Colors.input || Colors.card,
-            textAlign: 'left',
         },
         sendButton: {
             height: 54,
@@ -318,7 +318,7 @@ const ForgotPasswordScreen: React.FC = () => {
 
     return (
         <KeyboardAvoidingView
-            style={[styles.container, { direction: 'ltr' }]}
+            style={styles.container}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
             {isLoading && <LoadingOverlay text={t('auth.sendingResetLink', { defaultValue: 'Sending reset link...' })} />}
@@ -346,7 +346,7 @@ const ForgotPasswordScreen: React.FC = () => {
                         <View style={styles.inputContainer}>
                             <Text style={styles.label}>{t('auth.email')}</Text>
                             <TextInput
-                                style={styles.input}
+                                style={[styles.input, { textAlign: getTextAlign('left') }]}
                                 placeholder={t('auth.enterEmail')}
                                 placeholderTextColor={Colors.mutedForeground}
                                 value={email}
@@ -354,7 +354,6 @@ const ForgotPasswordScreen: React.FC = () => {
                                 keyboardType="email-address"
                                 autoCapitalize="none"
                                 editable={!isLoading && canSendAgain}
-                                textAlign="left"
                             />
                         </View>
 

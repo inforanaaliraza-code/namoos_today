@@ -70,7 +70,6 @@ const SplashScreen: React.FC = () => {
             justifyContent: 'center',
             alignItems: 'center',
             position: 'relative',
-            direction: 'ltr',
         },
         gradientTop: {
             position: 'absolute',

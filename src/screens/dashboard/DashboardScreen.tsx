@@ -21,6 +21,7 @@ import useColors from '../../hooks/useColors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import FadeIn from '../../components/animations/FadeIn';
 import ScaleIn from '../../components/animations/ScaleIn';
 // Temporarily disabled for stability
@@ -49,6 +50,7 @@ const DashboardScreen: React.FC = () => {
     const dispatch = useAppDispatch();
     const { t } = useTranslation();
     const Colors = useColors();
+    const { getTextAlign } = useRTLStyles();
     const styles = useMemo(() => createStyles(Colors), [Colors]);
 
     const { conversations: conversationsState } = useAppSelector((state) => state.chat);
@@ -145,8 +147,8 @@ const DashboardScreen: React.FC = () => {
                             resizeMode="contain"
                         />
                         <View style={styles.headerText}>
-                            <Text style={styles.greeting}>{t('dashboard.welcome')},</Text>
-                            <Text style={styles.userName}>{user?.fullName || t('common.name')}</Text>
+                            <Text style={[styles.greeting, { textAlign: getTextAlign('left') }]}>{t('dashboard.welcome')},</Text>
+                            <Text style={[styles.userName, { textAlign: getTextAlign('left') }]}>{user?.fullName || t('common.name')}</Text>
                         </View>
                     </View>
                     <View style={styles.headerRight}>
@@ -226,13 +228,12 @@ const DashboardScreen: React.FC = () => {
                     </View>
                     <View style={styles.consultationInputContainer}>
                         <TextInput
-                            style={styles.consultationInput}
+                            style={[styles.consultationInput, { textAlign: getTextAlign('left') }]}
                             placeholder={t('dashboard.askAnythingLegalPlaceholder')}
                             placeholderTextColor="rgba(255, 255, 255, 0.7)"
                             value={consultationInput}
                             onChangeText={setConsultationInput}
                             multiline={false}
-                            textAlign={'left'}
                         />
                         <TouchableOpacity
                             style={styles.microphoneButton}
@@ -427,7 +428,6 @@ const createStyles = (Colors: any) => StyleSheet.create({
         fontSize: 15,
         color: Colors.mutedForeground,
         fontWeight: '400',
-        textAlign: 'left',
     },
     userName: {
         fontSize: 26,
@@ -435,7 +435,6 @@ const createStyles = (Colors: any) => StyleSheet.create({
         color: Colors.foreground,
         marginTop: 4,
         letterSpacing: -0.5,
-        textAlign: 'left',
     },
     notificationButton: {
         width: 44,

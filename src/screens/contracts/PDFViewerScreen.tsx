@@ -18,6 +18,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../navigation/types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useColors } from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import FadeInView from '../../components/FadeInView';
 
@@ -86,7 +87,6 @@ const PDFViewerScreen: React.FC<Props> = ({ route, navigation }) => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         pdf: {
             flex: 1,

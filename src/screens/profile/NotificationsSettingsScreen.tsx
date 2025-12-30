@@ -16,6 +16,7 @@ import { useColors } from '../../hooks/useColors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FadeInView from '../../components/FadeInView';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 
 interface NotificationSetting {
     id: string;
@@ -27,13 +28,13 @@ interface NotificationSetting {
 
 const NotificationsSettingsScreen: React.FC = () => {
     const Colors = useColors();
+    const { getTextAlign, getFlexDirection, getRTLMargins } = useRTLStyles();
 
 
     const styles = StyleSheet.create({
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         content: {
             padding: 20,
@@ -42,7 +43,6 @@ const NotificationsSettingsScreen: React.FC = () => {
             marginBottom: 32,
         },
         sectionHeader: {
-            flexDirection: 'row',
             alignItems: 'center',
             marginBottom: 16,
             gap: 8,
@@ -51,10 +51,8 @@ const NotificationsSettingsScreen: React.FC = () => {
             fontSize: 18,
             fontWeight: '600',
             color: Colors.foreground,
-            textAlign: 'left',
         },
         settingRow: {
-            flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
             backgroundColor: Colors.card,
@@ -66,19 +64,16 @@ const NotificationsSettingsScreen: React.FC = () => {
         },
         settingInfo: {
             flex: 1,
-            marginRight: 16, marginLeft: 0,
         },
         settingTitle: {
             fontSize: 16,
             fontWeight: '600',
             color: Colors.foreground,
             marginBottom: 4,
-            textAlign: 'left',
         },
         settingDescription: {
             fontSize: 12,
             color: Colors.mutedForeground,
-            textAlign: 'left',
         },
     });
     const [settings, setSettings] = useState<NotificationSetting[]>([
@@ -144,10 +139,10 @@ const NotificationsSettingsScreen: React.FC = () => {
     };
 
     const renderSetting = (setting: NotificationSetting) => (
-        <View key={setting.id} style={styles.settingRow}>
-            <View style={styles.settingInfo}>
-                <Text style={styles.settingTitle}>{setting.title}</Text>
-                <Text style={styles.settingDescription}>{setting.description}</Text>
+        <View key={setting.id} style={[styles.settingRow, { flexDirection: getFlexDirection('row') }]}>
+            <View style={[styles.settingInfo, getRTLMargins(0, 16)]}>
+                <Text style={[styles.settingTitle, { textAlign: getTextAlign('left') }]}>{setting.title}</Text>
+                <Text style={[styles.settingDescription, { textAlign: getTextAlign('left') }]}>{setting.description}</Text>
             </View>
             <Switch
                 value={setting.enabled}
@@ -163,27 +158,27 @@ const NotificationsSettingsScreen: React.FC = () => {
             <ScrollView style={styles.container} contentContainerStyle={styles.content}>
                 {/* Push Notifications */}
                 <View style={styles.section}>
-                    <View style={styles.sectionHeader}>
+                    <View style={[styles.sectionHeader, { flexDirection: getFlexDirection('row') }]}>
                         <Icon name="bell" size={24} color={Colors.primary} />
-                        <Text style={styles.sectionTitle}>Push Notifications</Text>
+                        <Text style={[styles.sectionTitle, { textAlign: getTextAlign('left') }]}>Push Notifications</Text>
                     </View>
                     {groupedSettings.push.map(renderSetting)}
                 </View>
 
                 {/* Email Notifications */}
                 <View style={styles.section}>
-                    <View style={styles.sectionHeader}>
+                    <View style={[styles.sectionHeader, { flexDirection: getFlexDirection('row') }]}>
                         <Icon name="email" size={24} color={Colors.primary} />
-                        <Text style={styles.sectionTitle}>Email Notifications</Text>
+                        <Text style={[styles.sectionTitle, { textAlign: getTextAlign('left') }]}>Email Notifications</Text>
                     </View>
                     {groupedSettings.email.map(renderSetting)}
                 </View>
 
                 {/* SMS Notifications */}
                 <View style={styles.section}>
-                    <View style={styles.sectionHeader}>
+                    <View style={[styles.sectionHeader, { flexDirection: getFlexDirection('row') }]}>
                         <Icon name="message-text" size={24} color={Colors.primary} />
-                        <Text style={styles.sectionTitle}>SMS Notifications</Text>
+                        <Text style={[styles.sectionTitle, { textAlign: getTextAlign('left') }]}>SMS Notifications</Text>
                     </View>
                     {groupedSettings.sms.map(renderSetting)}
                 </View>

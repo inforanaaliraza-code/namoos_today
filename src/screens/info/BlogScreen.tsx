@@ -13,6 +13,7 @@ import {
     Image,
 } from 'react-native';
 import { useColors } from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import { useLanguage } from '../../contexts/LanguageContext';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FadeInView from '../../components/FadeInView';
@@ -56,13 +57,13 @@ const blogPosts: BlogPost[] = [
 
 const BlogScreen: React.FC = () => {
     const Colors = useColors();
+    const { getTextAlign, getFlexDirection } = useRTLStyles();
 
 
     const styles = StyleSheet.create({
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         content: {
             padding: 20,

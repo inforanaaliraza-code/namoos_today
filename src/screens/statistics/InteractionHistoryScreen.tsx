@@ -45,7 +45,6 @@ const InteractionHistoryScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         centerContainer: {
             flex: 1,

@@ -21,6 +21,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../navigation/types';
 import { creditRequestAPI } from '../../api/creditRequest.api';
 import useColors from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -32,6 +33,7 @@ const CreditRequestScreen: React.FC = () => {
     const Colors = useColors();
     const navigation = useNavigation<CreditRequestScreenNavigationProp>();
     const { t } = useTranslation();
+    const { getTextAlign, getFlexDirection } = useRTLStyles();
 
 
     const [amount, setAmount] = useState('');
@@ -43,7 +45,6 @@ const CreditRequestScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         scrollView: {
             flex: 1,

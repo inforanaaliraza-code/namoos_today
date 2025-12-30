@@ -97,7 +97,6 @@ const CheckoutScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         content: {
             padding: 20,

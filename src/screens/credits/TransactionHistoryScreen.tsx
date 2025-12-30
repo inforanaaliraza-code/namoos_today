@@ -21,6 +21,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchCreditHistory } from '../../store/slices/creditsSlice';
 import { CreditTransaction } from '../../types/credits.types';
 import { useColors } from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -44,7 +45,6 @@ const TransactionHistoryScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         loadingContainer: {
             flex: 1,

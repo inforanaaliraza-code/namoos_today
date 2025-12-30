@@ -6,6 +6,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useColors } from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import { useLanguage } from '../../contexts/LanguageContext';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -24,7 +25,6 @@ const NoInternetScreen: React.FC<NoInternetScreenProps> = ({ onRetry }) => {
             alignItems: 'center',
             padding: 20,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         title: {
             fontSize: 24,

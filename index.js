@@ -7,15 +7,14 @@ import 'react-native-gesture-handler';
 
 import { AppRegistry, I18nManager } from 'react-native';
 
-// Enforce LTR layout application-wide (English only)
+// Enable RTL support - direction will be set dynamically by LanguageContext
 try {
-    if (I18nManager.isRTL) {
-        I18nManager.allowRTL(false);
-        I18nManager.forceRTL(false);
-    }
+    I18nManager.allowRTL(true);
+    // Don't force RTL here - let LanguageContext handle it based on selected language
 } catch (e) {
-    console.warn('Failed to enforce LTR:', e);
+    console.warn('Failed to configure RTL:', e);
 }
+
 import App from './App';
 import { name as appName } from './app.json';
 

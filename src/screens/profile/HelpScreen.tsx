@@ -17,6 +17,7 @@ import { useColors } from '../../hooks/useColors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 
 interface FAQItem {
     id: string;
@@ -57,13 +58,13 @@ const HelpScreen: React.FC = () => {
     const navigation = useNavigation();
     const Colors = useColors();
     const { t } = useTranslation();
+    const { getTextAlign, getFlexDirection, getWritingDirection } = useRTLStyles();
 
 
     const styles = StyleSheet.create({
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         content: {
             padding: 20,
@@ -81,13 +82,11 @@ const HelpScreen: React.FC = () => {
             marginTop: 16,
             marginBottom: 8,
             textAlign: 'center',
-            writingDirection: 'ltr',
         },
         headerSubtitle: {
             fontSize: 14,
             color: Colors.mutedForeground,
             textAlign: 'center',
-            writingDirection: 'ltr',
         },
         section: {
             marginBottom: 32,
@@ -97,10 +96,8 @@ const HelpScreen: React.FC = () => {
             fontWeight: '600',
             color: Colors.foreground,
             marginBottom: 16,
-            textAlign: 'left',
         },
         contactButton: {
-            flexDirection: 'row',
             alignItems: 'center',
             backgroundColor: Colors.card,
             padding: 16,
@@ -118,12 +115,10 @@ const HelpScreen: React.FC = () => {
             fontWeight: '600',
             color: Colors.foreground,
             marginBottom: 4,
-            textAlign: 'left',
         },
         contactDescription: {
             fontSize: 12,
             color: Colors.mutedForeground,
-            textAlign: 'left',
         },
         faqItem: {
             backgroundColor: Colors.card,
@@ -192,7 +187,7 @@ const HelpScreen: React.FC = () => {
 
             {/* Contact Support */}
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>{t('profile.contactSupport')}</Text>
+                <Text style={[styles.sectionTitle, { textAlign: getTextAlign('left') }]}>{t('profile.contactSupport')}</Text>
                 <TouchableOpacity
                     style={styles.contactButton}
                     onPress={() => {
@@ -203,34 +198,34 @@ const HelpScreen: React.FC = () => {
                 >
                     <Icon name="message-text" size={24} color={Colors.primary} />
                     <View style={styles.contactInfo}>
-                        <Text style={styles.contactTitle}>{t('info.liveChat', { defaultValue: 'Live Chat' })}</Text>
-                        <Text style={styles.contactDescription}>{t('info.chatWithSupport', { defaultValue: 'Chat with our support team' })}</Text>
+                        <Text style={[styles.contactTitle, { textAlign: getTextAlign('left') }]}>{t('info.liveChat', { defaultValue: 'Live Chat' })}</Text>
+                        <Text style={[styles.contactDescription, { textAlign: getTextAlign('left') }]}>{t('info.chatWithSupport', { defaultValue: 'Chat with our support team' })}</Text>
                     </View>
                     <Icon name="chevron-right" size={20} color={Colors.mutedForeground} />
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={styles.contactButton}
+                    style={[styles.contactButton, { flexDirection: getFlexDirection('row') }]}
                     onPress={handleEmailSupport}
                     activeOpacity={0.7}
                 >
                     <Icon name="email" size={24} color={Colors.primary} />
                     <View style={styles.contactInfo}>
-                        <Text style={styles.contactTitle}>{t('info.emailSupport', { defaultValue: 'Email Support' })}</Text>
-                        <Text style={styles.contactDescription}>support@namos.ai</Text>
+                        <Text style={[styles.contactTitle, { textAlign: getTextAlign('left') }]}>{t('info.emailSupport', { defaultValue: 'Email Support' })}</Text>
+                        <Text style={[styles.contactDescription, { textAlign: getTextAlign('left') }]}>support@namos.ai</Text>
                     </View>
                     <Icon name="chevron-right" size={20} color={Colors.mutedForeground} />
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={styles.contactButton}
+                    style={[styles.contactButton, { flexDirection: getFlexDirection('row') }]}
                     onPress={handlePhoneSupport}
                     activeOpacity={0.7}
                 >
                     <Icon name="phone" size={24} color={Colors.primary} />
                     <View style={styles.contactInfo}>
-                        <Text style={styles.contactTitle}>{t('info.phoneSupport', { defaultValue: 'Phone Support' })}</Text>
-                        <Text style={styles.contactDescription}>+966 12 345 6789</Text>
+                        <Text style={[styles.contactTitle, { textAlign: getTextAlign('left') }]}>{t('info.phoneSupport', { defaultValue: 'Phone Support' })}</Text>
+                        <Text style={[styles.contactDescription, { textAlign: getTextAlign('left') }]}>+966 12 345 6789</Text>
                     </View>
                     <Icon name="chevron-right" size={20} color={Colors.mutedForeground} />
                 </TouchableOpacity>
@@ -238,7 +233,7 @@ const HelpScreen: React.FC = () => {
 
             {/* FAQ */}
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>{t('info.faq', { defaultValue: 'Frequently Asked Questions' })}</Text>
+                <Text style={[styles.sectionTitle, { textAlign: getTextAlign('left') }]}>{t('info.faq', { defaultValue: 'Frequently Asked Questions' })}</Text>
                 {faqItems.map((item) => (
                     <View key={item.id} style={styles.faqItem}>
                         <TouchableOpacity
@@ -246,7 +241,7 @@ const HelpScreen: React.FC = () => {
                             onPress={() => toggleFAQ(item.id)}
                             activeOpacity={0.7}
                         >
-                            <Text style={[styles.faqQuestionText, { textAlign: 'left' }]}>{item.question}</Text>
+                            <Text style={[styles.faqQuestionText, { textAlign: getTextAlign('left') }]}>{item.question}</Text>
                             <Icon
                                 name={expandedFAQ === item.id ? 'chevron-up' : 'chevron-down'}
                                 size={20}
@@ -255,7 +250,7 @@ const HelpScreen: React.FC = () => {
                         </TouchableOpacity>
                         {expandedFAQ === item.id && (
                             <View style={styles.faqAnswer}>
-                                <Text style={[styles.faqAnswerText, { textAlign: 'left' }]}>{item.answer}</Text>
+                                <Text style={[styles.faqAnswerText, { textAlign: getTextAlign('left') }]}>{item.answer}</Text>
                             </View>
                         )}
                     </View>

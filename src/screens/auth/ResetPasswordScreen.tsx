@@ -18,6 +18,7 @@ import axios from 'axios';
 import { API_CONFIG } from '../../config/api.config';
 import { useColors } from '../../hooks/useColors';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import { useTranslation } from 'react-i18next';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import FadeInView from '../../components/FadeInView';
@@ -39,6 +40,7 @@ const ResetPasswordScreen: React.FC = () => {
     const navigation = useNavigation();
     const route = useRoute<RouteProp<RouteParams, 'ResetPassword'>>();
     const { t } = useTranslation();
+    const { getTextAlign, getFlexDirection, getRTLMargins } = useRTLStyles();
 
 
     const [tokenValid, setTokenValid] = useState<boolean | null>(null);
@@ -56,7 +58,6 @@ const ResetPasswordScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         scrollContent: {
             flexGrow: 1,
@@ -103,7 +104,6 @@ const ResetPasswordScreen: React.FC = () => {
             marginBottom: 8,
         },
         inputWrapper: {
-            flexDirection: 'row',
             alignItems: 'center',
             height: 50,
             borderWidth: 1,
@@ -114,14 +114,11 @@ const ResetPasswordScreen: React.FC = () => {
         },
         icon: {
             fontSize: 16,
-            marginRight: 8,
-            marginLeft: 0,
         },
         passwordInput: {
             flex: 1,
             fontSize: 16,
             color: Colors.foreground,
-            textAlign: 'left',
         },
         eyeIcon: {
             padding: 8,
@@ -419,7 +416,7 @@ const ResetPasswordScreen: React.FC = () => {
     // Reset password form
     return (
         <KeyboardAvoidingView
-            style={[styles.container, { direction: 'ltr' }]}
+            style={styles.container}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
             {isLoading && <LoadingOverlay text={t('common.loading')} fullScreen />}
@@ -443,10 +440,10 @@ const ResetPasswordScreen: React.FC = () => {
                         {/* New Password */}
                         <View style={styles.inputContainer}>
                             <Text style={styles.label}>{t('security.newPassword', { defaultValue: 'New Password' })}</Text>
-                            <View style={styles.inputWrapper}>
-                                <Text style={styles.icon}>🔒</Text>
+                            <View style={[styles.inputWrapper, { flexDirection: getFlexDirection('row') }]}>
+                                <Text style={[styles.icon, getRTLMargins(0, 8)]}>🔒</Text>
                                 <TextInput
-                                    style={styles.passwordInput}
+                                    style={[styles.passwordInput, { textAlign: getTextAlign('left') }]}
                                     placeholder={t('security.enterNewPassword', { defaultValue: 'Enter your new password' })}
                                     placeholderTextColor="#9CA3AF"
                                     value={newPassword}
@@ -458,7 +455,6 @@ const ResetPasswordScreen: React.FC = () => {
                                     }}
                                     secureTextEntry={!showPassword}
                                     editable={!isLoading}
-                                    textAlign="left"
                                 />
                                 <TouchableOpacity
                                     style={styles.eyeIcon}
@@ -475,10 +471,10 @@ const ResetPasswordScreen: React.FC = () => {
                         {/* Confirm Password */}
                         <View style={styles.inputContainer}>
                             <Text style={styles.label}>{t('auth.confirmPassword')}</Text>
-                            <View style={styles.inputWrapper}>
-                                <Text style={styles.icon}>🔒</Text>
+                            <View style={[styles.inputWrapper, { flexDirection: getFlexDirection('row') }]}>
+                                <Text style={[styles.icon, getRTLMargins(0, 8)]}>🔒</Text>
                                 <TextInput
-                                    style={styles.passwordInput}
+                                    style={[styles.passwordInput, { textAlign: getTextAlign('left') }]}
                                     placeholder={t('security.confirmNewPassword', { defaultValue: 'Confirm your new password' })}
                                     placeholderTextColor="#9CA3AF"
                                     value={confirmPassword}
@@ -490,7 +486,6 @@ const ResetPasswordScreen: React.FC = () => {
                                     }}
                                     secureTextEntry={!showConfirmPassword}
                                     editable={!isLoading}
-                                    textAlign="left"
                                 />
                                 <TouchableOpacity
                                     style={styles.eyeIcon}

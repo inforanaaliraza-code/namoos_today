@@ -22,6 +22,7 @@ import { isBiometricEnabled, setBiometricEnabled } from '../../utils/storage';
 import { checkBiometricAvailability, getBiometricTypeName } from '../../utils/biometric';
 import useColors from '../../hooks/useColors';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 // Temporarily disabled for stability
@@ -31,12 +32,12 @@ import LoadingOverlay from '../../components/LoadingOverlay';
 const SecurityScreen: React.FC = () => {
     const Colors = useColors();
     const { t } = useTranslation();
+    const { getTextAlign, getFlexDirection, getRTLMargins } = useRTLStyles();
 
     const styles = StyleSheet.create({
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         content: {
             padding: 20,
@@ -49,7 +50,6 @@ const SecurityScreen: React.FC = () => {
             fontWeight: '600',
             color: Colors.foreground,
             marginBottom: 16,
-            textAlign: 'left',
         },
         fieldContainer: {
             marginBottom: 16,
@@ -59,7 +59,6 @@ const SecurityScreen: React.FC = () => {
             fontWeight: '600',
             color: Colors.foreground,
             marginBottom: 8,
-            textAlign: 'left',
         },
         input: {
             backgroundColor: Colors.card,
@@ -70,7 +69,6 @@ const SecurityScreen: React.FC = () => {
             color: Colors.foreground,
             borderWidth: 1,
             borderColor: Colors.border,
-            textAlign: 'left',
         },
         changePasswordButton: {
             backgroundColor: Colors.primary,
@@ -90,7 +88,6 @@ const SecurityScreen: React.FC = () => {
             opacity: 0.6,
         },
         settingRow: {
-            flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
             backgroundColor: Colors.card,
@@ -101,23 +98,18 @@ const SecurityScreen: React.FC = () => {
         },
         settingInfo: {
             flex: 1,
-            marginRight: 16,
-            marginLeft: 0,
         },
         settingTitle: {
             fontSize: 16,
             fontWeight: '600',
             color: Colors.foreground,
             marginBottom: 4,
-            textAlign: 'left',
         },
         settingDescription: {
             fontSize: 12,
             color: Colors.mutedForeground,
-            textAlign: 'left',
         },
         menuItem: {
-            flexDirection: 'row',
             alignItems: 'center',
             backgroundColor: Colors.card,
             padding: 16,
@@ -130,7 +122,6 @@ const SecurityScreen: React.FC = () => {
             flex: 1,
             fontSize: 16,
             color: Colors.foreground,
-            textAlign: 'left',
         },
     });
     const navigation = useNavigation();
@@ -198,41 +189,38 @@ const SecurityScreen: React.FC = () => {
             <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.content}>
                 {/* Change Password Section */}
                 <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>{t('profile.changePassword')}</Text>
+                    <Text style={[styles.sectionTitle, { textAlign: getTextAlign('left') }]}>{t('profile.changePassword')}</Text>
                     <View style={styles.fieldContainer}>
-                        <Text style={styles.label}>{t('security.currentPassword', { defaultValue: 'Current Password' })}</Text>
+                        <Text style={[styles.label, { textAlign: getTextAlign('left') }]}>{t('security.currentPassword', { defaultValue: 'Current Password' })}</Text>
                         <TextInput
-                            style={styles.input}
+                            style={[styles.input, { textAlign: getTextAlign('left') }]}
                             value={currentPassword}
                             onChangeText={setCurrentPassword}
                             placeholder={t('security.enterCurrentPassword', { defaultValue: 'Enter current password' })}
                             placeholderTextColor={Colors.mutedForeground}
                             secureTextEntry
-                            textAlign="left"
                         />
                     </View>
                     <View style={styles.fieldContainer}>
-                        <Text style={styles.label}>{t('security.newPassword', { defaultValue: 'New Password' })}</Text>
+                        <Text style={[styles.label, { textAlign: getTextAlign('left') }]}>{t('security.newPassword', { defaultValue: 'New Password' })}</Text>
                         <TextInput
-                            style={styles.input}
+                            style={[styles.input, { textAlign: getTextAlign('left') }]}
                             value={newPassword}
                             onChangeText={setNewPassword}
                             placeholder={t('security.enterNewPassword', { defaultValue: 'Enter new password' })}
                             placeholderTextColor={Colors.mutedForeground}
                             secureTextEntry
-                            textAlign="left"
                         />
                     </View>
                     <View style={styles.fieldContainer}>
-                        <Text style={styles.label}>{t('auth.confirmPassword')}</Text>
+                        <Text style={[styles.label, { textAlign: getTextAlign('left') }]}>{t('auth.confirmPassword')}</Text>
                         <TextInput
-                            style={styles.input}
+                            style={[styles.input, { textAlign: getTextAlign('left') }]}
                             value={confirmPassword}
                             onChangeText={setConfirmPassword}
                             placeholder={t('security.confirmNewPassword', { defaultValue: 'Confirm new password' })}
                             placeholderTextColor={Colors.mutedForeground}
                             secureTextEntry
-                            textAlign="left"
                         />
                     </View>
                     <TouchableOpacity
@@ -250,10 +238,10 @@ const SecurityScreen: React.FC = () => {
 
                 {/* Biometric Authentication */}
                 <View style={styles.section}>
-                    <View style={styles.settingRow}>
-                        <View style={styles.settingInfo}>
-                            <Text style={styles.settingTitle}>{t('profile.biometricAuthentication')}</Text>
-                            <Text style={styles.settingDescription}>
+                    <View style={[styles.settingRow, { flexDirection: getFlexDirection('row') }]}>
+                        <View style={[styles.settingInfo, getRTLMargins(0, 16)]}>
+                            <Text style={[styles.settingTitle, { textAlign: getTextAlign('left') }]}>{t('profile.biometricAuthentication')}</Text>
+                            <Text style={[styles.settingDescription, { textAlign: getTextAlign('left') }]}>
                                 {biometricAvailable
                                     ? t('security.useBiometricLogin', { type: biometricType, defaultValue: `Use ${biometricType} to login` })
                                     : t('profile.biometricNotAvailableDevice')}
@@ -292,13 +280,13 @@ const SecurityScreen: React.FC = () => {
 
                 {/* Session Management */}
                 <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>{t('security.sessionManagement', { defaultValue: 'Session Management' })}</Text>
+                    <Text style={[styles.sectionTitle, { textAlign: getTextAlign('left') }]}>{t('security.sessionManagement', { defaultValue: 'Session Management' })}</Text>
                     <TouchableOpacity
-                        style={styles.menuItem}
+                        style={[styles.menuItem, { flexDirection: getFlexDirection('row') }]}
                         onPress={() => navigation.navigate('LoginHistory' as never)}
                     >
                         <Icon name="history" size={24} color={Colors.foreground} />
-                        <Text style={styles.menuItemText}>{t('profile.loginHistory')}</Text>
+                        <Text style={[styles.menuItemText, { textAlign: getTextAlign('left') }]}>{t('profile.loginHistory')}</Text>
                         <Icon name="chevron-right" size={20} color={Colors.mutedForeground} />
                     </TouchableOpacity>
                 </View>

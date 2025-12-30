@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { authAPI } from '../../api/auth.api';
 import { useColors } from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -39,6 +40,7 @@ interface LoginSession {
 const LoginHistoryScreen: React.FC = () => {
     const Colors = useColors();
     const { t } = useTranslation();
+    const { getTextAlign, getFlexDirection, getRTLMargins } = useRTLStyles();
 
     const [sessions, setSessions] = useState<LoginSession[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -47,7 +49,6 @@ const LoginHistoryScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         loadingContainer: {
             flex: 1,
@@ -66,7 +67,6 @@ const LoginHistoryScreen: React.FC = () => {
             borderColor: Colors.border,
         },
         sessionHeader: {
-            flexDirection: 'row',
             marginBottom: 12,
         },
         sessionIcon: {
@@ -76,14 +76,11 @@ const LoginHistoryScreen: React.FC = () => {
             backgroundColor: Colors.primary + '15',
             justifyContent: 'center',
             alignItems: 'center',
-            marginRight: 12,
-            marginLeft: 0,
         },
         sessionInfo: {
             flex: 1,
         },
         sessionTitleRow: {
-            flexDirection: 'row',
             alignItems: 'center',
             marginBottom: 4,
             gap: 8,
@@ -92,7 +89,6 @@ const LoginHistoryScreen: React.FC = () => {
             fontSize: 16,
             fontWeight: '600',
             color: Colors.foreground,
-            textAlign: 'left',
         },
         currentBadge: {
             backgroundColor: Colors.success + '20',
@@ -110,15 +106,12 @@ const LoginHistoryScreen: React.FC = () => {
             fontSize: 14,
             color: Colors.mutedForeground,
             marginBottom: 2,
-            textAlign: 'left',
         },
         sessionIP: {
             fontSize: 12,
             color: Colors.mutedForeground,
-            textAlign: 'left',
         },
         sessionFooter: {
-            flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
             paddingTop: 12,
@@ -128,10 +121,8 @@ const LoginHistoryScreen: React.FC = () => {
         sessionDate: {
             fontSize: 12,
             color: Colors.mutedForeground,
-            textAlign: 'left',
         },
         logoutButton: {
-            flexDirection: 'row',
             alignItems: 'center',
             gap: 4,
         },
@@ -216,25 +207,25 @@ const LoginHistoryScreen: React.FC = () => {
     // Memoized session item component for performance
     const SessionItem = React.memo(({ item, onLogout }: { item: LoginSession; onLogout: (id: string) => void }) => (
         <View style={styles.sessionCard}>
-            <View style={styles.sessionHeader}>
-                <View style={styles.sessionIcon}>
+            <View style={[styles.sessionHeader, { flexDirection: getFlexDirection('row') }]}>
+                <View style={[styles.sessionIcon, getRTLMargins(0, 12)]}>
                     <Icon name={getDeviceIcon(item.deviceType || 'unknown')} size={24} color={Colors.primary} />
                 </View>
                 <View style={styles.sessionInfo}>
-                    <View style={styles.sessionTitleRow}>
-                        <Text style={styles.sessionDeviceName}>{item.deviceName || t('security.unknownDevice', { defaultValue: 'Unknown Device' })}</Text>
+                    <View style={[styles.sessionTitleRow, { flexDirection: getFlexDirection('row') }]}>
+                        <Text style={[styles.sessionDeviceName, { textAlign: getTextAlign('left') }]}>{item.deviceName || t('security.unknownDevice', { defaultValue: 'Unknown Device' })}</Text>
                         {item.isActive && (
                             <View style={styles.currentBadge}>
                                 <Text style={styles.currentBadgeText}>{t('chat.active')}</Text>
                             </View>
                         )}
                     </View>
-                    <Text style={styles.sessionLocation}>{item.location || t('security.unknownLocation', { defaultValue: 'Unknown Location' })}</Text>
-                    <Text style={styles.sessionIP}>IP: {item.ipAddress || t('security.unknownIP', { defaultValue: 'Unknown IP' })}</Text>
+                    <Text style={[styles.sessionLocation, { textAlign: getTextAlign('left') }]}>{item.location || t('security.unknownLocation', { defaultValue: 'Unknown Location' })}</Text>
+                    <Text style={[styles.sessionIP, { textAlign: getTextAlign('left') }]}>IP: {item.ipAddress || t('security.unknownIP', { defaultValue: 'Unknown IP' })}</Text>
                 </View>
             </View>
-            <View style={styles.sessionFooter}>
-                <Text style={styles.sessionDate}>{t('security.lastActive', { defaultValue: 'Last active' })}: {formatDate(item.lastActive || item.loginAt || new Date().toISOString())}</Text>
+            <View style={[styles.sessionFooter, { flexDirection: getFlexDirection('row') }]}>
+                <Text style={[styles.sessionDate, { textAlign: getTextAlign('left') }]}>{t('security.lastActive', { defaultValue: 'Last active' })}: {formatDate(item.lastActive || item.loginAt || new Date().toISOString())}</Text>
             </View>
         </View>
     ));

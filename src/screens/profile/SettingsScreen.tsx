@@ -23,6 +23,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import { useColors } from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { checkBiometricAvailability, getBiometricTypeName } from '../../utils/biometric';
 import { isBiometricEnabled, setBiometricEnabled } from '../../utils/storage';
@@ -52,6 +53,7 @@ const SettingsScreen: React.FC = () => {
     const { isDark, toggleTheme } = useTheme();
     const { t } = useTranslation();
     const Colors = useColors();
+    const { getTextAlign, getFlexDirection, getRTLMargins } = useRTLStyles();
 
     const [biometricEnabled, setBiometricEnabledState] = useState(false);
     const [biometricAvailable, setBiometricAvailable] = useState(false);
@@ -65,7 +67,6 @@ const SettingsScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         content: {
             padding: 20,
@@ -81,7 +82,6 @@ const SettingsScreen: React.FC = () => {
             textTransform: 'uppercase',
             marginBottom: 12,
             letterSpacing: 0.5,
-            textAlign: 'left',
         },
         sectionContent: {
             backgroundColor: Colors.card,
@@ -591,7 +591,7 @@ const SettingsScreen: React.FC = () => {
                 <TouchableOpacity
                     style={[
                         styles.settingItem,
-                        { flexDirection: 'row' },
+                        { flexDirection: getFlexDirection('row') },
                         item.danger && styles.settingItemDanger,
                         isDisabled && styles.settingItemDisabled,
                     ]}
@@ -612,7 +612,7 @@ const SettingsScreen: React.FC = () => {
                     <View style={styles.settingContent}>
                         <Text style={[
                             styles.settingTitle,
-                            { textAlign: 'left' },
+                            { textAlign: getTextAlign('left') },
                             item.danger && styles.settingTitleDanger,
                             isDisabled && styles.settingTitleDisabled
                         ]}>
@@ -621,7 +621,7 @@ const SettingsScreen: React.FC = () => {
                         {item.description && (
                             <Text style={[
                                 styles.settingDescription,
-                                { textAlign: 'left' },
+                                { textAlign: getTextAlign('left') },
                                 isDisabled && styles.settingDescriptionDisabled
                             ]}>
                                 {item.description}
@@ -656,7 +656,7 @@ const SettingsScreen: React.FC = () => {
         <View style={styles.section}>
             <Text style={[
                 styles.sectionTitle,
-                { textAlign: 'left' }
+                { textAlign: getTextAlign('left') }
             ]}>{title}</Text>
             <View style={styles.sectionContent}>
                 {items.map(renderSettingItem)}
@@ -665,7 +665,7 @@ const SettingsScreen: React.FC = () => {
     );
 
     return (
-        <View key={`settings-${language}`} style={[styles.container, { direction: 'ltr' }]}>
+        <View key={`settings-${language}`} style={styles.container}>
             {isClearingCache && <LoadingOverlay text={t('common.loading', { defaultValue: 'Clearing cache...' })} />}
             {/* Language Selector - Top Right */}
             <View style={[
@@ -692,7 +692,7 @@ const SettingsScreen: React.FC = () => {
                     <TouchableOpacity
                         style={[
                             styles.logoutButton,
-                            { flexDirection: 'row' }
+                            { flexDirection: getFlexDirection('row') }
                         ]}
                         onPress={handleLogout}
                         activeOpacity={0.7}
@@ -700,7 +700,7 @@ const SettingsScreen: React.FC = () => {
                         <Icon name="logout" size={24} color={Colors.error} />
                         <Text style={[
                             styles.logoutText,
-                            { marginLeft: 12, marginRight: 0 }
+                            getRTLMargins(12, 0)
                         ]}>{t('profile.logout')}</Text>
                     </TouchableOpacity>
                 </View>

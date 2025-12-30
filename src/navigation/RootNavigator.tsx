@@ -106,7 +106,6 @@ const RootNavigator: React.FC = () => {
             style={[
                 styles.container,
                 {
-                    direction: 'ltr',
                 }
             ]}
         >

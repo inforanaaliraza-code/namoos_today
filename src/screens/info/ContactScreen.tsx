@@ -15,6 +15,7 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import useColors from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useAppSelector } from '../../store/hooks';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +26,7 @@ const ContactScreen: React.FC = () => {
     const Colors = useColors();
     const { user } = useAppSelector((state) => state.auth);
     const { t } = useTranslation();
+    const { getTextAlign, getFlexDirection } = useRTLStyles();
 
     const [name, setName] = useState(user?.fullName || '');
     const [email, setEmail] = useState(user?.email || '');
@@ -36,7 +38,6 @@ const ContactScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         content: {
             padding: 20,

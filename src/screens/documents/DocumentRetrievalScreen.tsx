@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import { chatAPI } from '../../api/chat.api';
 import { useColors } from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -42,7 +43,6 @@ const DocumentRetrievalScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         searchContainer: {
             padding: 20,

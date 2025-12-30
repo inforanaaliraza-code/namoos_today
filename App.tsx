@@ -1,6 +1,6 @@
 /**
  * Main App Component with Toast Notifications
- * English-only language support with LTR layout
+ * Supports English (LTR) and Arabic (RTL) with dynamic layout switching
  */
 
 import React, { useEffect } from 'react';

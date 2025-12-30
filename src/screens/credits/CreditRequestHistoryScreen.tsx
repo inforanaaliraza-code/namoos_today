@@ -20,6 +20,7 @@ import { AppStackParamList } from '../../navigation/types';
 import { creditRequestAPI } from '../../api/creditRequest.api';
 import { CreditRequest } from '../../types/creditRequest.types';
 import { useColors } from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -47,7 +48,6 @@ const CreditRequestHistoryScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         statsContainer: {
             flexDirection: 'row',

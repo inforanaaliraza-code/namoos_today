@@ -21,6 +21,7 @@ import { Swipeable } from 'react-native-gesture-handler';
 import { AppStackParamList } from '../../navigation/types';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import { useDebounce } from '../../utils/debounce';
 import ListSkeletonLoader from '../../components/ListSkeletonLoader';
 import AnimatedListItem from '../../components/animations/AnimatedListItem';
@@ -35,6 +36,7 @@ const ConversationsScreen: React.FC = () => {
     const { t } = useTranslation();
 
     const Colors = useColors();
+    const { getTextAlign } = useRTLStyles();
     const [searchQuery, setSearchQuery] = useState('');
     const [activeFilter, setActiveFilter] = useState<'all' | 'active' | 'archived'>('all');
     const hasAutoNavigatedRef = useRef(false);
@@ -132,7 +134,6 @@ const ConversationsScreen: React.FC = () => {
                 flex: 1,
                 color: Colors.foreground,
                 fontSize: 16,
-                textAlign: 'left',
             },
             listContent: {
                 paddingBottom: 80,
@@ -170,7 +171,6 @@ const ConversationsScreen: React.FC = () => {
                 flex: 1,
                 marginRight: 8,
                 marginLeft: 0,
-                textAlign: 'left',
             },
             conversationTime: {
                 fontSize: 12,
@@ -179,7 +179,6 @@ const ConversationsScreen: React.FC = () => {
             lastMessage: {
                 fontSize: 14,
                 color: Colors.mutedForeground,
-                textAlign: 'left',
             },
             swipeActionsContainer: {
                 flexDirection: 'row',
@@ -371,7 +370,7 @@ const ConversationsScreen: React.FC = () => {
                 <View style={styles.conversationContent}>
                     <View style={styles.conversationHeader}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.conversationTitle} numberOfLines={1}>
+                            <Text style={[styles.conversationTitle, { textAlign: getTextAlign('left') }]} numberOfLines={1}>
                                 {item.title || t('chat.newConversation')}
                             </Text>
                             {item.isArchived && (
@@ -382,7 +381,7 @@ const ConversationsScreen: React.FC = () => {
                             {new Date(item.updatedAt).toLocaleDateString()}
                         </Text>
                     </View>
-                    <Text style={styles.lastMessage} numberOfLines={1}>
+                    <Text style={[styles.lastMessage, { textAlign: getTextAlign('left') }]} numberOfLines={1}>
                         {item.lastMessage || 'No messages yet'}
                     </Text>
                 </View>
@@ -401,12 +400,12 @@ const ConversationsScreen: React.FC = () => {
     );
 
     return (
-        <View style={[styles.container, { direction: 'ltr' }]}>
+        <View style={styles.container}>
             {/* Search Bar */}
             <View style={styles.searchContainer}>
                 <Icon name="magnify" size={20} color={Colors.mutedForeground} style={styles.searchIcon} />
                 <TextInput
-                    style={styles.searchInput}
+                    style={[styles.searchInput, { textAlign: getTextAlign('left') }]}
                     placeholder="Search conversations..."
                     value={searchQuery}
                     onChangeText={setSearchQuery}

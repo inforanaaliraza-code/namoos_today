@@ -20,6 +20,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchContracts, deleteContract, setCurrentContract } from '../../store/slices/contractsSlice';
 import useColors from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Contract } from '../../types/contracts.types';
 import { useTranslation } from 'react-i18next';
@@ -34,6 +35,7 @@ const ContractsListScreen: React.FC = () => {
     const dispatch = useAppDispatch();
     const { contracts, isLoading } = useAppSelector((state) => state.contracts);
     const { t } = useTranslation();
+    const { getTextAlign, getFlexDirection, getRTLMargins } = useRTLStyles();
 
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -198,7 +200,7 @@ const ContractsListScreen: React.FC = () => {
             </View>
             <View style={styles.contractContent}>
                 <View style={styles.contractHeader}>
-                    <Text style={styles.contractTitle} numberOfLines={1}>
+                    <Text style={[styles.contractTitle, { textAlign: getTextAlign('left') }]} numberOfLines={1}>
                         {item.title}
                     </Text>
                     <TouchableOpacity
@@ -207,7 +209,7 @@ const ContractsListScreen: React.FC = () => {
                         <Icon name="dots-vertical" size={20} color={Colors.mutedForeground} />
                     </TouchableOpacity>
                 </View>
-                <View style={styles.contractMeta}>
+                <View style={[styles.contractMeta, { flexDirection: getFlexDirection('row') }]}>
                     <View style={[styles.badge, { backgroundColor: getContractColor(item.type) + '20' }]}>
                         <Text style={[styles.badgeText, { color: getContractColor(item.type) }]}>
                             {item.type}
@@ -234,7 +236,7 @@ const ContractsListScreen: React.FC = () => {
                         </Text>
                     </View>
                 </View>
-                <Text style={styles.contractDate}>
+                <Text style={[styles.contractDate, { textAlign: getTextAlign('left') }]}>
                     {new Date(item.createdAt).toLocaleDateString()}
                 </Text>
             </View>
@@ -255,10 +257,8 @@ const ContractsListScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         searchContainer: {
-            flexDirection: 'row',
             alignItems: 'center',
             backgroundColor: Colors.card,
             margin: 16,
@@ -269,13 +269,11 @@ const ContractsListScreen: React.FC = () => {
             height: 48,
         },
         searchIcon: {
-            marginRight: 8, marginLeft: 0,
         },
         searchInput: {
             flex: 1,
             color: Colors.foreground,
             fontSize: 16,
-            textAlign: 'left',
         },
         filterButton: {
             padding: 4,
@@ -297,7 +295,6 @@ const ContractsListScreen: React.FC = () => {
             fontWeight: '600',
             color: Colors.foreground,
             marginBottom: 8,
-            textAlign: 'left',
         },
         filterChips: {
             flexDirection: 'row',
@@ -361,7 +358,6 @@ const ContractsListScreen: React.FC = () => {
             fontWeight: '600',
             color: Colors.foreground,
             flex: 1,
-            textAlign: 'left',
         },
         contractMeta: {
             flexDirection: 'row',
@@ -393,7 +389,6 @@ const ContractsListScreen: React.FC = () => {
         contractDate: {
             fontSize: 12,
             color: Colors.mutedForeground,
-            textAlign: 'left',
         },
         emptyContainer: {
             flex: 1,
@@ -464,7 +459,6 @@ const ContractsListScreen: React.FC = () => {
         menuItemText: {
             fontSize: 16,
             color: Colors.foreground,
-            textAlign: 'left',
         },
     });
 
@@ -700,7 +694,7 @@ const ContractsListScreen: React.FC = () => {
                             }}
                         >
                             <Icon name="eye" size={20} color={Colors.foreground} />
-                            <Text style={styles.menuItemText}>{t('common.view')}</Text>
+                            <Text style={[styles.menuItemText, { textAlign: getTextAlign('left') }]}>{t('common.view')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.menuItem}
@@ -710,7 +704,7 @@ const ContractsListScreen: React.FC = () => {
                             }}
                         >
                             <Icon name="download" size={20} color={Colors.foreground} />
-                            <Text style={styles.menuItemText}>{t('common.download')}</Text>
+                            <Text style={[styles.menuItemText, { textAlign: getTextAlign('left') }]}>{t('common.download')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.menuItem}
@@ -720,7 +714,7 @@ const ContractsListScreen: React.FC = () => {
                             }}
                         >
                             <Icon name="share-variant" size={20} color={Colors.foreground} />
-                            <Text style={styles.menuItemText}>{t('common.share')}</Text>
+                            <Text style={[styles.menuItemText, { textAlign: getTextAlign('left') }]}>{t('common.share')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={[styles.menuItem, styles.menuItemDanger]}
@@ -730,7 +724,7 @@ const ContractsListScreen: React.FC = () => {
                             }}
                         >
                             <Icon name="trash-can-outline" size={20} color={Colors.error} />
-                            <Text style={[styles.menuItemText, { color: Colors.error }]}>{t('common.delete')}</Text>
+                            <Text style={[styles.menuItemText, { textAlign: getTextAlign('left'), color: Colors.error }]}>{t('common.delete')}</Text>
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>

@@ -49,7 +49,6 @@ const SearchScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         searchContainer: {
             flexDirection: 'row',

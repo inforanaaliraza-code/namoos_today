@@ -22,6 +22,7 @@ import { fetchAuditStats } from '../../store/slices/statisticsSlice';
 import { logoutUser } from '../../store/slices/authSlice';
 import { useLanguage } from '../../contexts/LanguageContext';
 import useColors from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
@@ -38,6 +39,7 @@ const ProfileScreen: React.FC = () => {
     const { auditStats } = useAppSelector((state) => state.statistics);
     const { t } = useTranslation();
     const Colors = useColors();
+    const { getTextAlign, getFlexDirection } = useRTLStyles();
 
     const styles = StyleSheet.create({
         container: {
@@ -99,7 +101,6 @@ const ProfileScreen: React.FC = () => {
             textAlign: 'center',
         },
         editButton: {
-            flexDirection: 'row',
             alignItems: 'center',
             backgroundColor: 'rgba(255, 255, 255, 0.2)',
             paddingHorizontal: 16,
@@ -114,7 +115,6 @@ const ProfileScreen: React.FC = () => {
             textAlign: 'center',
         },
         statsContainer: {
-            flexDirection: 'row',
             paddingHorizontal: 20,
             marginTop: -20,
             marginBottom: 24,
@@ -151,7 +151,6 @@ const ProfileScreen: React.FC = () => {
             paddingHorizontal: 20,
         },
         menuItem: {
-            flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
             backgroundColor: Colors.card,
@@ -162,7 +161,6 @@ const ProfileScreen: React.FC = () => {
             borderColor: Colors.border,
         },
         menuItemLeft: {
-            flexDirection: 'row',
             alignItems: 'center',
             flex: 1,
             gap: 12,
@@ -180,7 +178,6 @@ const ProfileScreen: React.FC = () => {
             height: 40,
         },
         logoutButton: {
-            flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: Colors.card,
@@ -207,7 +204,6 @@ const ProfileScreen: React.FC = () => {
             fontWeight: '600',
             color: Colors.foreground,
             marginBottom: 12,
-            textAlign: 'left',
         },
         auditStatsCard: {
             backgroundColor: Colors.card,
@@ -217,7 +213,6 @@ const ProfileScreen: React.FC = () => {
             borderColor: Colors.border,
         },
         auditStatsRow: {
-            flexDirection: 'row',
             justifyContent: 'space-around',
             alignItems: 'center',
             marginBottom: 16,
@@ -382,7 +377,7 @@ const ProfileScreen: React.FC = () => {
                         <Text style={styles.userName}>{user?.fullName || t('common.name')}</Text>
                         <Text style={styles.userEmail}>{user?.email || ''}</Text>
                         <TouchableOpacity
-                            style={styles.editButton}
+                            style={[styles.editButton, { flexDirection: getFlexDirection('row') }]}
                             onPress={() => navigation.navigate('EditProfile' as never)}
                         >
                             <Icon name="pencil" size={16} color={Colors.primary} />
@@ -397,18 +392,18 @@ const ProfileScreen: React.FC = () => {
                         {menuItems.map((item: any, index: number) => (
                             <PressableScale key={item.id} scaleTo={0.97}>
                                 <TouchableOpacity
-                                    style={styles.menuItem}
+                                    style={[styles.menuItem, { flexDirection: getFlexDirection('row') }]}
                                     onPress={item.onPress}
                                     activeOpacity={0.7}
                                 >
-                                    <View style={styles.menuItemLeft}>
+                                    <View style={[styles.menuItemLeft, { flexDirection: getFlexDirection('row') }]}>
                                         <Icon
                                             name={item.icon}
                                             size={24}
                                             color={Colors.foreground}
                                         />
                                         <View style={styles.menuItemTextContainer}>
-                                            <Text style={styles.menuItemText}>
+                                            <Text style={[styles.menuItemText, { textAlign: getTextAlign('left') }]}>
                                                 {item.title}
                                             </Text>
                                         </View>
@@ -428,7 +423,7 @@ const ProfileScreen: React.FC = () => {
                 <FadeIn delay={500}>
                     <PressableScale scaleTo={0.97}>
                         <TouchableOpacity
-                            style={styles.logoutButton}
+                            style={[styles.logoutButton, { flexDirection: getFlexDirection('row') }]}
                             onPress={handleLogout}
                             activeOpacity={0.7}
                         >

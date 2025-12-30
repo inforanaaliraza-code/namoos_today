@@ -42,6 +42,7 @@ import { AppStackParamList } from '../../navigation/types';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import { useTheme } from '../../contexts/ThemeContext';
 import PressableScale from '../../components/animations/PressableScale';
 
@@ -58,6 +59,7 @@ const ChatScreen: React.FC = () => {
     const dispatch = useAppDispatch();
     const flatListRef = useRef<FlatList>(null);
     const { t } = useTranslation();
+    const { getTextAlign } = useRTLStyles();
 
     const Colors = useColors();
     const { isDark, toggleTheme } = useTheme();
@@ -649,7 +651,6 @@ const ChatScreen: React.FC = () => {
             messageText: {
                 fontSize: 13,
                 lineHeight: 18,
-                textAlign: 'left',
                 fontWeight: '400',
             },
             userText: {
@@ -685,7 +686,6 @@ const ChatScreen: React.FC = () => {
                 color: DarkText,
                 borderWidth: 1,
                 borderColor: '#2a2a30',
-                textAlign: 'left',
             },
             sendButton: {
                 width: 36,
@@ -811,7 +811,6 @@ const ChatScreen: React.FC = () => {
             messageMenuLabel: {
                 fontSize: 15,
                 color: Colors.foreground,
-                textAlign: 'left',
             },
             messageMenuDivider: {
                 height: StyleSheet.hairlineWidth,
@@ -846,7 +845,6 @@ const ChatScreen: React.FC = () => {
                 shadowRadius: 12,
                 shadowOffset: { width: 2, height: 0 },
                 elevation: 8,
-                direction: 'ltr',
             },
             drawerHeader: {
                 flexDirection: 'row',
@@ -1513,7 +1511,7 @@ const ChatScreen: React.FC = () => {
                         >
                             <View style={[styles.messageBubble, styles.userBubble]}>
                                 <Text
-                                    style={[styles.messageText, styles.userText]}
+                                    style={[styles.messageText, styles.userText, { textAlign: getTextAlign('left') }]}
                                     selectable
                                 >
                                     {displayContent}
@@ -1541,13 +1539,13 @@ const ChatScreen: React.FC = () => {
                                             size="small"
                                             color={Colors.primary}
                                         />
-                                        <Text style={[styles.messageText, styles.aiText, { opacity: 0.6 }]}>
+                                        <Text style={[styles.messageText, styles.aiText, { opacity: 0.6, textAlign: getTextAlign('left') }]}>
                                             {t('chat.regenerating', { defaultValue: 'Regenerating response...' })}
                                         </Text>
                                     </View>
                                 ) : (
                                     <Text
-                                        style={[styles.messageText, styles.aiText]}
+                                        style={[styles.messageText, styles.aiText, { textAlign: getTextAlign('left') }]}
                                         selectable
                                     >
                                         {displayContent}
@@ -1674,7 +1672,7 @@ const ChatScreen: React.FC = () => {
 
     return (
         <KeyboardAvoidingView
-            style={[styles.container, { direction: 'ltr' }]}
+            style={styles.container}
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
         >
@@ -1888,12 +1886,11 @@ const ChatScreen: React.FC = () => {
                         </View>
                         <View style={styles.modalBody}>
                             <TextInput
-                                style={styles.modalInput}
+                                style={[styles.modalInput, { textAlign: getTextAlign('left') }]}
                                 value={renameTitle}
                                 onChangeText={setRenameTitle}
                                 placeholder={t('chat.newConversation', { defaultValue: 'New conversation' })}
                                 placeholderTextColor={Colors.mutedForeground}
-                                textAlign="left"
                             />
                         </View>
                         <View style={styles.modalButtons}>
@@ -1923,14 +1920,13 @@ const ChatScreen: React.FC = () => {
                     <Icon name="plus" size={20} color={DarkText} />
                 </TouchableOpacity>
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, { textAlign: getTextAlign('left') }]}
                     value={inputText}
                     onChangeText={handleInputChange}
                     placeholder={t('chat.typeMessage')}
                     placeholderTextColor={Colors.mutedForeground}
                     multiline
                     maxLength={2000}
-                    textAlign="left"
                 />
                 <TouchableOpacity
                     style={[styles.sendButton, !inputText.trim() && styles.sendButtonDisabled]}
@@ -1951,12 +1947,11 @@ const ChatScreen: React.FC = () => {
                             <View style={styles.drawerSearchContainer}>
                                 <Icon name="magnify" size={20} color={DarkSub} />
                                 <TextInput
-                                    style={styles.drawerSearchInput}
+                                    style={[styles.drawerSearchInput, { textAlign: getTextAlign('left') }]}
                                     placeholder={t('chat.search', { defaultValue: 'Search' })}
                                     placeholderTextColor={DarkSub}
                                     value={drawerSearch}
                                     onChangeText={setDrawerSearch}
-                                    textAlign="left"
                                 />
                             </View>
                             <TouchableOpacity
@@ -2058,14 +2053,13 @@ const ChatScreen: React.FC = () => {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.modalBody}>
-                            <TextInput
-                                style={styles.modalInput}
-                                value={editText}
-                                onChangeText={setEditText}
-                                multiline
-                                autoFocus
-                                textAlign="left"
-                            />
+                                <TextInput
+                                    style={[styles.modalInput, { textAlign: getTextAlign('left') }]}
+                                    value={editText}
+                                    onChangeText={setEditText}
+                                    multiline
+                                    autoFocus
+                                />
                         </View>
                         <View style={styles.modalButtons}>
                             <TouchableOpacity

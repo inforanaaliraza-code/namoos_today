@@ -20,6 +20,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchTemplates, generateContract, setFormData } from '../../store/slices/contractsSlice';
 import useColors from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ContractType, ContractTemplate, ContractField } from '../../types/contracts.types';
 import { Picker } from '@react-native-picker/picker';
@@ -41,6 +42,7 @@ const GenerateContractScreen: React.FC = () => {
     const dispatch = useAppDispatch();
     const { templates, formData, isGenerating } = useAppSelector((state) => state.contracts);
     const { t } = useTranslation();
+    const { getTextAlign } = useRTLStyles();
 
 
     // Contract types with translations
@@ -170,7 +172,6 @@ const GenerateContractScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         scrollView: {
             flex: 1,

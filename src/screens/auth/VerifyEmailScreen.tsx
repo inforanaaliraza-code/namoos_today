@@ -163,7 +163,6 @@ const VerifyEmailScreen: React.FC = () => {
             backgroundColor: Colors.background,
             justifyContent: 'center',
             alignItems: 'center',
-            direction: 'ltr',
         },
         content: {
             width: '100%',

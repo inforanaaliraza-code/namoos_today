@@ -18,6 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchCredits, fetchCreditHistory } from '../../store/slices/creditsSlice';
 import useColors from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { CreditTransaction } from '../../types/credits.types';
 import { useTranslation } from 'react-i18next';
@@ -75,6 +76,7 @@ const CreditsScreen: React.FC = () => {
     const { t } = useTranslation();
 
     const Colors = useColors();
+    const { getTextAlign, getFlexDirection } = useRTLStyles();
 
     const [refreshing, setRefreshing] = useState(false);
 
@@ -82,7 +84,6 @@ const CreditsScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         balanceCard: {
             backgroundColor: Colors.primary,

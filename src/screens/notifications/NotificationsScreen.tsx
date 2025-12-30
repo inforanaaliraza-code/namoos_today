@@ -33,7 +33,6 @@ const NotificationsScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         headerActions: {
             padding: 16,

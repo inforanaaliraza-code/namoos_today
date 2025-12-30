@@ -22,6 +22,7 @@ import { AppStackParamList } from '../../navigation/types';
 import { auditAPI } from '../../api/audit.api';
 import { UserAuditLog } from '../../types/audit.types';
 import { useColors } from '../../hooks/useColors';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -35,6 +36,7 @@ const ActivityLogScreen: React.FC = () => {
     const Colors = useColors();
     const navigation = useNavigation<ActivityLogScreenNavigationProp>();
     const { t } = useTranslation();
+    const { getTextAlign, getFlexDirection } = useRTLStyles();
 
 
     const [logs, setLogs] = useState<UserAuditLog[]>([]);
@@ -148,12 +150,12 @@ const ActivityLogScreen: React.FC = () => {
                         <Icon name={actionIcon.name} size={20} color={actionIcon.color} />
                     </View>
                     <View style={styles.logContent}>
-                        <Text style={styles.logAction}>
+                        <Text style={[styles.logAction, { textAlign: getTextAlign('left') }]}>
                             {t(`activityLog.actions.${item.action}`, { defaultValue: item.action })}
                         </Text>
-                        <Text style={styles.logEntity}>{item.entityName || item.entityId}</Text>
+                        <Text style={[styles.logEntity, { textAlign: getTextAlign('left') }]}>{item.entityName || item.entityId}</Text>
                         {item.description && (
-                            <Text style={styles.logDescription} numberOfLines={2}>
+                            <Text style={[styles.logDescription, { textAlign: getTextAlign('left') }]} numberOfLines={2}>
                                 {item.description}
                             </Text>
                         )}
@@ -162,7 +164,7 @@ const ActivityLogScreen: React.FC = () => {
                 <View style={[styles.logFooter, { flexDirection: 'row' }]}>
                     <View style={[styles.logDateRow, { flexDirection: 'row' }]}>
                         <Icon name="clock-outline" size={14} color={Colors.mutedForeground} />
-                        <Text style={styles.logDate}>{formatDate(item.createdAt)}</Text>
+                        <Text style={[styles.logDate, { textAlign: getTextAlign('left') }]}>{formatDate(item.createdAt)}</Text>
                     </View>
                     <Icon
                         name="chevron-right"
@@ -227,13 +229,13 @@ const ActivityLogScreen: React.FC = () => {
                         </View>
 
                         <View style={styles.detailSection}>
-                            <Text style={styles.detailLabel}>{t('activityLog.entityType')}</Text>
-                            <Text style={styles.detailValue}>{selectedLog.entityType}</Text>
+                            <Text style={[styles.detailLabel, { textAlign: getTextAlign('left') }]}>{t('activityLog.entityType')}</Text>
+                            <Text style={[styles.detailValue, { textAlign: getTextAlign('left') }]}>{selectedLog.entityType}</Text>
                         </View>
 
                         <View style={styles.detailSection}>
-                            <Text style={styles.detailLabel}>{t('activityLog.entityName')}</Text>
-                            <Text style={styles.detailValue}>{selectedLog.entityName || selectedLog.entityId}</Text>
+                            <Text style={[styles.detailLabel, { textAlign: getTextAlign('left') }]}>{t('activityLog.entityName')}</Text>
+                            <Text style={[styles.detailValue, { textAlign: getTextAlign('left') }]}>{selectedLog.entityName || selectedLog.entityId}</Text>
                         </View>
 
                         {selectedLog.description && (
@@ -245,8 +247,8 @@ const ActivityLogScreen: React.FC = () => {
 
                         {selectedLog.ipAddress && (
                             <View style={styles.detailSection}>
-                                <Text style={styles.detailLabel}>{t('activityLog.ipAddress')}</Text>
-                                <Text style={styles.detailValue}>{selectedLog.ipAddress}</Text>
+                                <Text style={[styles.detailLabel, { textAlign: getTextAlign('left') }]}>{t('activityLog.ipAddress')}</Text>
+                                <Text style={[styles.detailValue, { textAlign: getTextAlign('left') }]}>{selectedLog.ipAddress}</Text>
                             </View>
                         )}
 
@@ -293,7 +295,6 @@ const ActivityLogScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         filtersContainer: {
             padding: 16,
@@ -309,7 +310,6 @@ const ActivityLogScreen: React.FC = () => {
             fontWeight: '600',
             color: Colors.foreground,
             marginBottom: 8,
-            textAlign: 'left',
         },
         filterButtons: {
             flexWrap: 'wrap',
@@ -430,7 +430,6 @@ const ActivityLogScreen: React.FC = () => {
         modalContainer: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         modalHeader: {
             justifyContent: 'space-between',
@@ -443,7 +442,6 @@ const ActivityLogScreen: React.FC = () => {
             fontSize: 20,
             fontWeight: 'bold',
             color: Colors.foreground,
-            textAlign: 'left',
         },
         closeButton: {
             padding: 8,
@@ -461,13 +459,11 @@ const ActivityLogScreen: React.FC = () => {
             color: Colors.mutedForeground,
             marginBottom: 8,
             textTransform: 'uppercase',
-            textAlign: 'left',
         },
         detailValue: {
             fontSize: 16,
             color: Colors.foreground,
             lineHeight: 24,
-            textAlign: 'left',
         },
         jsonContainer: {
             backgroundColor: Colors.card,
@@ -480,7 +476,6 @@ const ActivityLogScreen: React.FC = () => {
             fontSize: 12,
             fontFamily: 'monospace',
             color: Colors.foreground,
-            textAlign: 'left',
         },
     });
 
@@ -491,7 +486,7 @@ const ActivityLogScreen: React.FC = () => {
                 {/* Filters */}
                 <View style={styles.filtersContainer}>
                     <View style={styles.filterRow}>
-                        <Text style={styles.filterLabel}>{t('activityLog.entityType')}:</Text>
+                        <Text style={[styles.filterLabel, { textAlign: getTextAlign('left') }]}>{t('activityLog.entityType')}:</Text>
                         <View style={[styles.filterButtons, { flexDirection: 'row' }]}>
                             {['all', 'conversation', 'credit_request', 'profile', 'password'].map((type) => (
                                 <TouchableOpacity

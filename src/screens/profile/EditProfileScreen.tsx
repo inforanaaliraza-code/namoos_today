@@ -21,6 +21,7 @@ import { updateProfile } from '../../store/slices/authSlice';
 import useColors from '../../hooks/useColors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useRTLStyles } from '../../hooks/useRTLStyles';
 import { useTranslation } from 'react-i18next';
 import LoadingOverlay from '../../components/LoadingOverlay';
 
@@ -31,6 +32,7 @@ const EditProfileScreen: React.FC = () => {
     const { user } = useAppSelector((state) => state.auth);
     const { language, changeLanguage } = useLanguage();
     const { t } = useTranslation();
+    const { getTextAlign, getFlexDirection } = useRTLStyles();
 
     const [fullName, setFullName] = useState(user?.fullName || '');
     const [email, setEmail] = useState(user?.email || '');
@@ -41,7 +43,6 @@ const EditProfileScreen: React.FC = () => {
         container: {
             flex: 1,
             backgroundColor: Colors.background,
-            direction: 'ltr',
         },
         content: {
             padding: 20,
@@ -66,7 +67,6 @@ const EditProfileScreen: React.FC = () => {
             marginBottom: 16,
         },
         changeAvatarButton: {
-            flexDirection: 'row',
             alignItems: 'center',
             gap: 8,
         },
@@ -87,7 +87,6 @@ const EditProfileScreen: React.FC = () => {
             fontWeight: '600',
             color: Colors.foreground,
             marginBottom: 8,
-            textAlign: 'left',
         },
         input: {
             backgroundColor: Colors.card,
@@ -98,7 +97,6 @@ const EditProfileScreen: React.FC = () => {
             color: Colors.foreground,
             borderWidth: 1,
             borderColor: Colors.border,
-            textAlign: 'left',
         },
         inputDisabled: {
             backgroundColor: Colors.background,
@@ -108,11 +106,9 @@ const EditProfileScreen: React.FC = () => {
             fontSize: 12,
             color: Colors.mutedForeground,
             marginTop: 4,
-            textAlign: 'left',
         },
         saveButton: {
             backgroundColor: Colors.primary,
-            flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
             paddingVertical: 16,
@@ -130,7 +126,6 @@ const EditProfileScreen: React.FC = () => {
 
         },
         languageContainer: {
-            flexDirection: 'row',
             gap: 12,
             marginTop: 8,
         },
@@ -199,39 +194,36 @@ const EditProfileScreen: React.FC = () => {
                 {/* Form Fields */}
                 <View style={styles.formSection}>
                     <View style={styles.fieldContainer}>
-                        <Text style={styles.label}>{t('auth.fullName')} *</Text>
+                        <Text style={[styles.label, { textAlign: getTextAlign('left') }]}>{t('auth.fullName')} *</Text>
                         <TextInput
-                            style={styles.input}
+                            style={[styles.input, { textAlign: getTextAlign('left') }]}
                             value={fullName}
                             onChangeText={setFullName}
                             placeholder={t('auth.enterFullName')}
                             placeholderTextColor={Colors.mutedForeground}
-                            textAlign="left"
                         />
                     </View>
 
                     <View style={styles.fieldContainer}>
-                        <Text style={styles.label}>{t('auth.email')}</Text>
+                        <Text style={[styles.label, { textAlign: getTextAlign('left') }]}>{t('auth.email')}</Text>
                         <TextInput
-                            style={[styles.input, styles.inputDisabled]}
+                            style={[styles.input, styles.inputDisabled, { textAlign: getTextAlign('left') }]}
                             value={email}
                             editable={false}
                             placeholderTextColor={Colors.mutedForeground}
-                            textAlign="left"
                         />
-                        <Text style={styles.hint}>{t('profile.emailCannotBeChanged')}</Text>
+                        <Text style={[styles.hint, { textAlign: getTextAlign('left') }]}>{t('profile.emailCannotBeChanged')}</Text>
                     </View>
 
                     <View style={styles.fieldContainer}>
-                        <Text style={styles.label}>{t('auth.phone')}</Text>
+                        <Text style={[styles.label, { textAlign: getTextAlign('left') }]}>{t('auth.phone')}</Text>
                         <TextInput
-                            style={styles.input}
+                            style={[styles.input, { textAlign: getTextAlign('left') }]}
                             value={phone}
                             onChangeText={setPhone}
                             placeholder="+966 5XX XXX XXX"
                             placeholderTextColor={Colors.mutedForeground}
                             keyboardType="phone-pad"
-                            textAlign="left"
                         />
                     </View>
 
@@ -239,7 +231,7 @@ const EditProfileScreen: React.FC = () => {
 
                 {/* Save Button */}
                 <TouchableOpacity
-                    style={[styles.saveButton, isSaving && styles.saveButtonDisabled]}
+                    style={[styles.saveButton, { flexDirection: getFlexDirection('row') }, isSaving && styles.saveButtonDisabled]}
                     onPress={handleSave}
                     disabled={isSaving}
                 >
