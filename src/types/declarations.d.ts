@@ -3,6 +3,9 @@
  * This file helps TypeScript understand third-party JavaScript libraries
  */
 
+// React Native global variables
+declare const __DEV__: boolean;
+
 // If you ever need to add custom type declarations for libraries
 // that don't have @types packages, add them here:
 
